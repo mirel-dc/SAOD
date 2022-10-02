@@ -27,9 +27,21 @@ void shakerSort(int arr[], int n)
 
 int main()
 {
-    int i;
-    int arr[] = {2, 4, 14, 24, 2, 11, 1, 9};
-    int N = sizeof(arr) / sizeof(arr[0]);
+    int i, N = 10;
+
+    int arr[N];
+    for (i = 0; i < N - 1; i++)
+    {
+        arr[i] = rand() % 20;
+    }
+
+    cout << "Before sort: \n";
+    for (i = 0; i < N - 1; i++)
+    {
+        cout << arr[i] << ' ';
+    }
+
+    cout << endl;
     shakerSort(arr, N);
     cout << "After sort: \n";
     for (i = 0; i < N - 1; i++)
