@@ -23,7 +23,8 @@ void bubbleSort(int arr[], int n)
 int main()
 {
     srand(time(NULL));
-    int i, N = 10;
+    int i;
+    const int N = 10;
 
     int arr[N];
     for (i = 0; i < N - 1; i++)
