@@ -4,6 +4,24 @@ using namespace std;
 
 void insertSort(int arr[], int n)
 {
+    int i, j, temp;
+    for (i = 1; i < n - 1; i++)
+    {
+        temp = arr[i];
+        j = 0;
+        while ((j < i) && (arr[j] < temp))
+        {
+            swap(arr[j - 1], arr[j]);
+            j++;
+        }
+        arr[j] = temp;
+
+        for (int k = 0; k < n - 1; k++)
+        {
+            cout << arr[k] << ' ';
+        }
+        cout << endl;
+    }
 }
 
 int main()
@@ -31,5 +49,6 @@ int main()
     {
         cout << arr[i] << ' ';
     }
+    cout << endl;
     return 0;
 }
