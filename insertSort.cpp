@@ -4,30 +4,25 @@ using namespace std;
 
 void insertSort(int arr[], int n)
 {
-    int i, j, temp;
+    int i, j = 0, temp;
     for (i = 1; i < n - 1; i++)
     {
         temp = arr[i];
-        j = 0;
-        while ((j < i) && (arr[j] < temp))
+        j = i;
+        while ((j > 0) && (arr[j - 1] > temp))
         {
-            swap(arr[j - 1], arr[j]);
-            j++;
+            arr[j] = arr[j - 1];
+            j--;
         }
         arr[j] = temp;
-
-        for (int k = 0; k < n - 1; k++)
-        {
-            cout << arr[k] << ' ';
-        }
-        cout << endl;
     }
 }
 
 int main()
 {
     srand(time(NULL));
-    int i, N = 10;
+    int i;
+    const int N = 10;
 
     int arr[N];
     for (i = 0; i < N - 1; i++)
@@ -40,6 +35,7 @@ int main()
     {
         cout << arr[i] << ' ';
     }
+    cout << "\n--------------" << endl;
 
     cout << endl;
 
