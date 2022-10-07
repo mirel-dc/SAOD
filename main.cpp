@@ -101,6 +101,14 @@ void bubbleSort(int arr[], int n)
 void shakerSort(int arr[], int n)
 {
     int left = 0, right = n - 1, i;
+    int range = n;
+    int Array[n];
+
+    for (int i = 0; i < range; i++)
+    {
+        Array[i] = arr[i];
+    }
+
     while (left <= right)
     {
         for (i = right; i >= left; i--)
@@ -108,6 +116,7 @@ void shakerSort(int arr[], int n)
             if (arr[i - 1] > arr[i])
             {
                 swap(arr[i - 1], arr[i]);
+                swap(Array[i - 1], Array[i]);
             }
         }
         left++;
@@ -116,9 +125,11 @@ void shakerSort(int arr[], int n)
             if (arr[i - 1] > arr[i])
             {
                 swap(arr[i - 1], arr[i]);
+                swap(Array[i - 1], Array[i]);
             }
         }
         right--;
+        arrOut(Array, range);
     }
 }
 
