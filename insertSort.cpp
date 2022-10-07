@@ -35,7 +35,7 @@ int main()
     {
         cout << arr[i] << ' ';
     }
-    cout << "\n--------------" << endl;
+    cout << "\n-----------------" << endl;
 
     cout << endl;
 
