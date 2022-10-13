@@ -9,6 +9,8 @@ void bubbleSort(int arr[], int n);
 void shakerSort(int arr[], int n);
 void insertSort(int arr[], int n);
 void podshetSort(int arr[], int n);
+void extractSort(int arr[], int n);
+void treeSort(int arr[], int n);
 
 int main()
 {
@@ -25,6 +27,8 @@ int main()
         cout << "2: Shaker Sort" << endl;
         cout << "3: Insert Sort" << endl;
         cout << "4: Podshet Sort" << endl;
+        cout << "5: Extract Sort" << endl;
+        cout << "6: Tree Sort" << endl;
 
         cin >> command;
 
@@ -47,6 +51,16 @@ int main()
 
         case 4:
             podshetSort(arr, n);
+            arrOut(arr, n);
+            break;
+
+        case 5:
+            extractSort(arr, n);
+            arrOut(arr, n);
+            break;
+
+        case 6:
+            treeSort(arr, n);
             arrOut(arr, n);
             break;
 
@@ -176,4 +190,49 @@ void podshetSort(int arr[], int n)
     }
 
     delete[] tempArr;
+}
+
+void extractSort(int arr[], int n)
+{
+    int min, temp;
+    for (int i = 0; i < n - 1; i++)
+    {
+        min = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[j] < arr[min])
+                min = j;
+        }
+        swap(arr[i], arr[min]);
+    }
+}
+
+void kucha(int arr[], int n, int i)
+{
+    int maxim = i;
+    int l = 2 * i + 1, r = 2 * i + 2;
+    if (l < n && arr[l] > arr[maxim])
+        maxim = l;
+    if (r < n && arr[r] > arr[maxim])
+        maxim = r;
+    if (maxim != i)
+    {
+        swap(arr[i], arr[maxim]);
+        kucha(arr, n, maxim);
+    }
+}
+
+void treeSort(int arr[], int n)
+{
+
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
+        kucha(arr, n, i);
+    }
+    for (int i = n - 1; i >= 0; i--)
+    {
+        swap(arr[0], arr[i]);
+        kucha(arr, i, 0);
+        arrOut(arr, n);
+    }
 }
