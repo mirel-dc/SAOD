@@ -11,6 +11,7 @@ void insertSort(int arr[], int n);
 void podshetSort(int arr[], int n);
 void extractSort(int arr[], int n);
 void treeSort(int arr[], int n);
+void shellSort(int arr[], int n);
 
 int main()
 {
@@ -29,6 +30,7 @@ int main()
         cout << "4: Podshet Sort" << endl;
         cout << "5: Extract Sort" << endl;
         cout << "6: Tree Sort" << endl;
+        cout << "7: Shell Sort" << endl;
 
         cin >> command;
 
@@ -61,6 +63,11 @@ int main()
 
         case 6:
             treeSort(arr, n);
+            arrOut(arr, n);
+            break;
+
+        case 7:
+            shellSort(arr, n);
             arrOut(arr, n);
             break;
 
@@ -224,7 +231,6 @@ void kucha(int arr[], int n, int i)
 
 void treeSort(int arr[], int n)
 {
-
     for (int i = n / 2 - 1; i >= 0; i--)
     {
         kucha(arr, n, i);
@@ -234,5 +240,28 @@ void treeSort(int arr[], int n)
         swap(arr[0], arr[i]);
         kucha(arr, i, 0);
         arrOut(arr, n);
+    }
+}
+
+void shellSort(int arr[], int n)
+{
+    arrOut(arr, n);
+    int d = n / 2, temp;
+    while (d > 0)
+    {
+        for (int i = 0; i < n - d; i++)
+        {
+            int j = i;
+            while (j >= 0 && arr[j] > arr[j + d])
+            {
+                temp = arr[j];
+                arr[j] = arr[j + d];
+                arr[j + d] = temp;
+                j--;
+                arrOut(arr, n);
+                cout << "::" << d << endl;
+            }
+        }
+        d = d / 2;
     }
 }
