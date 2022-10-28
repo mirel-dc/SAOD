@@ -17,9 +17,18 @@ int main()
 {
     int i, loop = 1, command = 0;
     srand(time(NULL));
-    const int n = 10, maxim = 15;
-    int arr[n];
-    while (loop == 1)
+    const int n = 11, maxim = 100;
+
+    int arr[n] = {5, 27, 21, 91, 6, 1, 59, 88, 18, 53};
+
+    // arrRand(arr, n, maxim);
+    arrOut(arr, n);
+
+    shellSort(arr, n);
+
+    arrOut(arr, n);
+
+    /*while (loop == 1)
     {
         arrRand(arr, n, maxim);
         arrOut(arr, n);
@@ -78,7 +87,8 @@ int main()
         cout << "1 - continue" << endl;
         cin >> loop;
         cout << "---------------------" << endl;
-    }
+
+}*/
 
     return 0;
 }
@@ -122,13 +132,6 @@ void bubbleSort(int arr[], int n)
 void shakerSort(int arr[], int n)
 {
     int left = 0, right = n - 1, i;
-    int range = n;
-    int Array[n];
-
-    for (int i = 0; i < range; i++)
-    {
-        Array[i] = arr[i];
-    }
 
     while (left <= right)
     {
@@ -137,7 +140,6 @@ void shakerSort(int arr[], int n)
             if (arr[i - 1] > arr[i])
             {
                 swap(arr[i - 1], arr[i]);
-                swap(Array[i - 1], Array[i]);
             }
         }
         left++;
@@ -146,11 +148,10 @@ void shakerSort(int arr[], int n)
             if (arr[i - 1] > arr[i])
             {
                 swap(arr[i - 1], arr[i]);
-                swap(Array[i - 1], Array[i]);
             }
         }
         right--;
-        arrOut(Array, range);
+        arrOut(arr, n);
     }
 }
 
@@ -246,22 +247,27 @@ void treeSort(int arr[], int n)
 void shellSort(int arr[], int n)
 {
     arrOut(arr, n);
-    int d = n / 2, temp;
+    int d = n / 2;
     while (d > 0)
     {
-        for (int i = 0; i < n - d; i++)
+        for (int i = 0; i < n - d - 1; i++)
         {
+            bool flag = false;
             int j = i;
+            arrOut(arr, n);
+            cout << arr[j] << " - " << arr[j + d] << " ::" << d << endl;
             while (j >= 0 && arr[j] > arr[j + d])
             {
-                temp = arr[j];
-                arr[j] = arr[j + d];
-                arr[j + d] = temp;
+                cout << "swap" << endl;
+                swap(arr[j], arr[j + d]);
                 j--;
-                arrOut(arr, n);
-                cout << "::" << d << endl;
+                flag = true;
+            }
+            if (flag)
+            {
+                i = 0;
             }
         }
-        d = d / 2;
+        d /= 2;
     }
 }
