@@ -4,7 +4,6 @@ using namespace std;
 
 void arrOut(int arr[], int n);
 void arrRand(int arr[], int n, int maxim);
-
 void bubbleSort(int arr[], int n);
 void shakerSort(int arr[], int n);
 void insertSort(int arr[], int n);
@@ -12,6 +11,7 @@ void podshetSort(int arr[], int n);
 void extractSort(int arr[], int n);
 void treeSort(int arr[], int n);
 void shellSort(int arr[], int n);
+void mergeSort(int arr[], int n);
 
 int main()
 {
@@ -244,6 +244,50 @@ void treeSort(int arr[], int n)
     }
 }
 
+void mergeSort(int arr[], int n)
+{
+    int middle = n / 2, h = 1, c[n], step;
+    while (h < n)
+    {
+        step = h;
+        int i = 0, j = middle, k = 0;
+        while (step <= middle)
+        {
+            while ((i < step) && (j < n) && (j < (middle + step)))
+            {
+                if (arr[i] < arr[j])
+                {
+                    c[k] = arr[i];
+                    i++;
+                    k++;
+                }
+                else
+                {
+                    c[k] = arr[j];
+                    j++;
+                    k++;
+                }
+            }
+            while (i < step)
+            {
+                c[k] = arr[i];
+                i++;
+                k++;
+            }
+            while ((j < (middle + step)) && (j < n))
+            {
+                c[k] = arr[j];
+                j++;
+                k++;
+            }
+            step += h;
+        }
+        h = h * 2;
+        for (i = 0; i < n - 1; i++)
+            arr[i] = c[i];
+    }
+}
+
 void shellSort(int arr[], int n)
 {
     arrOut(arr, n);
@@ -260,14 +304,11 @@ void shellSort(int arr[], int n)
             {
                 cout << "swap" << endl;
                 swap(arr[j], arr[j + d]);
-                j--;
-                flag = true;
-            }
-            if (flag)
-            {
-                i = 0;
+                j = j - d;
             }
         }
         d /= 2;
     }
 }
+
+// https://prog-cpp.ru/sort-merge/
