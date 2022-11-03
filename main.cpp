@@ -11,91 +11,104 @@ void podshetSort(int arr[], int n);
 void extractSort(int arr[], int n);
 void treeSort(int arr[], int n);
 void shellSort(int arr[], int n);
+void kStat(int arr[], int n, int k);
 void mergeSort(int arr[], int n);
 
 int main()
 {
     int i, loop = 1, command = 0;
     srand(time(NULL));
-    const int n = 11, maxim = 100;
+    const int n = 10, maxim = 100;
 
-    int arr[n] = {5, 27, 21, 91, 6, 1, 59, 88, 18, 53};
+    int arr[n];
 
-    // arrRand(arr, n, maxim);
+    arrRand(arr, n, maxim);
     arrOut(arr, n);
 
-    shellSort(arr, n);
+    mergeSort(arr, n);
 
     arrOut(arr, n);
-
-    /*while (loop == 1)
-    {
-        arrRand(arr, n, maxim);
-        arrOut(arr, n);
-        cout << "Choose sort method: " << endl;
-        cout << "1: Bubble Sort" << endl;
-        cout << "2: Shaker Sort" << endl;
-        cout << "3: Insert Sort" << endl;
-        cout << "4: Podshet Sort" << endl;
-        cout << "5: Extract Sort" << endl;
-        cout << "6: Tree Sort" << endl;
-        cout << "7: Shell Sort" << endl;
-
-        cin >> command;
-
-        switch (command)
+    /*
+        while (loop == 1)
         {
-        case 1:
-            bubbleSort(arr, n);
+            arrRand(arr, n, maxim);
+            cout << "Choose sort method: " << endl;
+            cout << "1: Bubble Sort" << endl;
+            cout << "2: Shaker Sort" << endl;
+            cout << "3: Insert Sort" << endl;
+            cout << "4: Podshet Sort" << endl;
+            cout << "5: Extract Sort" << endl;
+            cout << "6: Tree Sort" << endl;
+            cout << "7: Shell Sort" << endl;
+            cout << "8: k-Statistic" << endl;
+            cout << "9: Merge Sort" << endl;
+            cin >> command;
             arrOut(arr, n);
-            break;
 
-        case 2:
-            shakerSort(arr, n);
-            arrOut(arr, n);
-            break;
+            switch (command)
+            {
+            case 1:
+                bubbleSort(arr, n);
+                arrOut(arr, n);
+                break;
 
-        case 3:
-            insertSort(arr, n);
-            arrOut(arr, n);
-            break;
+            case 2:
+                shakerSort(arr, n);
+                arrOut(arr, n);
+                break;
 
-        case 4:
-            podshetSort(arr, n);
-            arrOut(arr, n);
-            break;
+            case 3:
+                insertSort(arr, n);
+                arrOut(arr, n);
+                break;
 
-        case 5:
-            extractSort(arr, n);
-            arrOut(arr, n);
-            break;
+            case 4:
+                podshetSort(arr, n);
+                arrOut(arr, n);
+                break;
 
-        case 6:
-            treeSort(arr, n);
-            arrOut(arr, n);
-            break;
+            case 5:
+                extractSort(arr, n);
+                arrOut(arr, n);
+                break;
 
-        case 7:
-            shellSort(arr, n);
-            arrOut(arr, n);
-            break;
+            case 6:
+                treeSort(arr, n);
+                arrOut(arr, n);
+                break;
 
-        default:
-            break;
-        }
+            case 7:
+                shellSort(arr, n);
+                arrOut(arr, n);
+                break;
 
-        cout << "1 - continue" << endl;
-        cin >> loop;
-        cout << "---------------------" << endl;
+            case 8:
+                int k;
+                cout << "Vvedite posiciyu chisla" << endl;
+                cin >> k;
+                kStat(arr, n, k);
+                break;
 
-}*/
+            case 9:
+                mergeSort(arr, n);
+                arrOut(arr, n);
+                break;
+
+            default:
+                break;
+            }
+
+            cout << "1 - continue" << endl;
+            cin >> loop;
+            cout << "---------------------" << endl;
+        }*/
 
     return 0;
 }
 
 void arrRand(int arr[], int n, int maxim)
 {
-    for (int i = 0; i < n - 1; i++)
+    for (int i = 0; i < n; i++)
     {
         arr[i] = rand() % maxim;
     }
@@ -104,7 +117,7 @@ void arrRand(int arr[], int n, int maxim)
 void arrOut(int arr[], int n)
 {
     cout << "Array: " << endl;
-    for (int i = 0; i < n - 1; i++)
+    for (int i = 0; i < n; i++)
     {
         cout << arr[i] << ' ';
     }
@@ -244,50 +257,6 @@ void treeSort(int arr[], int n)
     }
 }
 
-void mergeSort(int arr[], int n)
-{
-    int middle = n / 2, h = 1, c[n], step;
-    while (h < n)
-    {
-        step = h;
-        int i = 0, j = middle, k = 0;
-        while (step <= middle)
-        {
-            while ((i < step) && (j < n) && (j < (middle + step)))
-            {
-                if (arr[i] < arr[j])
-                {
-                    c[k] = arr[i];
-                    i++;
-                    k++;
-                }
-                else
-                {
-                    c[k] = arr[j];
-                    j++;
-                    k++;
-                }
-            }
-            while (i < step)
-            {
-                c[k] = arr[i];
-                i++;
-                k++;
-            }
-            while ((j < (middle + step)) && (j < n))
-            {
-                c[k] = arr[j];
-                j++;
-                k++;
-            }
-            step += h;
-        }
-        h = h * 2;
-        for (i = 0; i < n - 1; i++)
-            arr[i] = c[i];
-    }
-}
-
 void shellSort(int arr[], int n)
 {
     arrOut(arr, n);
@@ -302,7 +271,6 @@ void shellSort(int arr[], int n)
             cout << arr[j] << " - " << arr[j + d] << " ::" << d << endl;
             while (j >= 0 && arr[j] > arr[j + d])
             {
-                cout << "swap" << endl;
                 swap(arr[j], arr[j + d]);
                 j = j - d;
             }
@@ -311,4 +279,85 @@ void shellSort(int arr[], int n)
     }
 }
 
-// https://prog-cpp.ru/sort-merge/
+void kStat(int arr[], int n, int k)
+{
+    int l = 1, r = n, i, j, x;
+    while (l < r - 1)
+    {
+        x = arr[k];
+        i = l;
+        j = r;
+        do
+        {
+            while (arr[i] < x)
+                i++;
+            while (arr[j] > x)
+                j--;
+            if (i <= j)
+            {
+                swap(arr[i], arr[j]);
+                i++;
+                j--;
+            }
+        } while (i < j);
+        if (j < k)
+            l = i;
+        if (i > k)
+            r = j;
+    }
+    arrOut(arr, n);
+    cout << "Nuwnoe chislo: " << arr[k] << endl;
+}
+
+void mergeSort(int arr[], int n)
+{
+    int rght, wid, rend;
+    int i, j, m, t;
+    int b[n];
+
+    for (int k = 1; k < n; k *= 2)
+    {
+        arrOut(arr, n);
+        cout << k << endl;
+        for (int left = 0; left + k < n; left += k * 2)
+        {
+            rght = left + k;
+            rend = rght + k;
+            if (rend > n)
+                rend = n;
+            m = left;
+            i = left;
+            j = rght;
+            while (i < rght && j < rend)
+            {
+                if (arr[i] <= arr[j])
+                {
+                    b[m] = arr[i];
+                    i++;
+                }
+                else
+                {
+                    b[m] = arr[j];
+                    j++;
+                }
+                m++;
+            }
+            while (i < rght)
+            {
+                b[m] = arr[i];
+                i++;
+                m++;
+            }
+            while (j < rend)
+            {
+                b[m] = arr[j];
+                j++;
+                m++;
+            }
+            for (m = left; m < rend; m++)
+            {
+                arr[m] = b[m];
+            }
+        }
+    }
+}
