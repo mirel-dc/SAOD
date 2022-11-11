@@ -18,90 +18,88 @@ int main()
 {
     int i, loop = 1, command = 0;
     srand(time(NULL));
-    const int n = 10, maxim = 100;
+    const int n = 15, maxim = 100;
 
     int arr[n];
 
     arrRand(arr, n, maxim);
     arrOut(arr, n);
+    arrRand(arr, n, maxim);
 
-    mergeSort(arr, n);
+    kStat(arr, n, 1);
+    /*while (loop == 1)
+    {
+        arrRand(arr, n, maxim);
+        cout << "Choose sort method: " << endl;
+        cout << "1: Bubble Sort" << endl;
+        cout << "2: Shaker Sort" << endl;
+        cout << "3: Insert Sort" << endl;
+        cout << "4: Podshet Sort" << endl;
+        cout << "5: Extract Sort" << endl;
+        cout << "6: Tree Sort" << endl;
+        cout << "7: Shell Sort" << endl;
+        cout << "8: k-Statistic" << endl;
+        cout << "9: Merge Sort" << endl;
+        cin >> command;
+        arrOut(arr, n);
 
-    arrOut(arr, n);
-    /*
-        while (loop == 1)
+        switch (command)
         {
-            arrRand(arr, n, maxim);
-            cout << "Choose sort method: " << endl;
-            cout << "1: Bubble Sort" << endl;
-            cout << "2: Shaker Sort" << endl;
-            cout << "3: Insert Sort" << endl;
-            cout << "4: Podshet Sort" << endl;
-            cout << "5: Extract Sort" << endl;
-            cout << "6: Tree Sort" << endl;
-            cout << "7: Shell Sort" << endl;
-            cout << "8: k-Statistic" << endl;
-            cout << "9: Merge Sort" << endl;
-            cin >> command;
+        case 1:
+            bubbleSort(arr, n);
             arrOut(arr, n);
+            break;
 
-            switch (command)
-            {
-            case 1:
-                bubbleSort(arr, n);
-                arrOut(arr, n);
-                break;
+        case 2:
+            shakerSort(arr, n);
+            arrOut(arr, n);
+            break;
 
-            case 2:
-                shakerSort(arr, n);
-                arrOut(arr, n);
-                break;
+        case 3:
+            insertSort(arr, n);
+            arrOut(arr, n);
+            break;
 
-            case 3:
-                insertSort(arr, n);
-                arrOut(arr, n);
-                break;
+        case 4:
+            podshetSort(arr, n);
+            arrOut(arr, n);
+            break;
 
-            case 4:
-                podshetSort(arr, n);
-                arrOut(arr, n);
-                break;
+        case 5:
+            extractSort(arr, n);
+            arrOut(arr, n);
+            break;
 
-            case 5:
-                extractSort(arr, n);
-                arrOut(arr, n);
-                break;
+        case 6:
+            treeSort(arr, n);
+            arrOut(arr, n);
+            break;
 
-            case 6:
-                treeSort(arr, n);
-                arrOut(arr, n);
-                break;
+        case 7:
+            shellSort(arr, n);
+            arrOut(arr, n);
+            break;
 
-            case 7:
-                shellSort(arr, n);
-                arrOut(arr, n);
-                break;
+        case 8:
+            int a;
+            cout << "Vvedite posiciyu chisla" << endl;
+            cin >> a;
+            kStat(arr, n, a);
+            break;
 
-            case 8:
-                int k;
-                cout << "Vvedite posiciyu chisla" << endl;
-                cin >> k;
-                kStat(arr, n, k);
-                break;
+        case 9:
+            mergeSort(arr, n);
+            arrOut(arr, n);
+            break;
 
-            case 9:
-                mergeSort(arr, n);
-                arrOut(arr, n);
-                break;
+        default:
+            break;
+        }
 
-            default:
-                break;
-            }
-
-            cout << "1 - continue" << endl;
-            cin >> loop;
-            cout << "---------------------" << endl;
-        }*/
+        cout << "1 - continue" << endl;
+        cin >> loop;
+        cout << "---------------------" << endl;
+    }*/
 
     return 0;
 }
@@ -281,10 +279,10 @@ void shellSort(int arr[], int n)
 
 void kStat(int arr[], int n, int k)
 {
-    int l = 1, r = n, i, j, x;
+    int l = 0, r = n, i, j, x, b = k;
     while (l < r - 1)
     {
-        x = arr[k];
+        x = arr[b];
         i = l;
         j = r;
         do
@@ -300,26 +298,26 @@ void kStat(int arr[], int n, int k)
                 j--;
             }
         } while (i < j);
-        if (j < k)
+        if (j < b)
             l = i;
-        if (i > k)
+        if (i > b)
             r = j;
     }
     arrOut(arr, n);
-    cout << "Nuwnoe chislo: " << arr[k] << endl;
+    cout << "Nuwnoe chislo: " << arr[b] << endl;
 }
 
 void mergeSort(int arr[], int n)
 {
-    int rght, wid, rend;
+    int rght, left, wid, rend;
     int i, j, m, t;
-    int b[n];
+    int b[n]; //Доп память
 
     for (int k = 1; k < n; k *= 2)
     {
         arrOut(arr, n);
-        cout << k << endl;
-        for (int left = 0; left + k < n; left += k * 2)
+        cout << "k = " << k * 2 << endl;
+        for (left = 0; left + k < n; left += k * 2)
         {
             rght = left + k;
             rend = rght + k;
@@ -359,5 +357,7 @@ void mergeSort(int arr[], int n)
                 arr[m] = b[m];
             }
         }
+        arrOut(arr, n);
+        cout << "--------------------" << endl;
     }
 }
