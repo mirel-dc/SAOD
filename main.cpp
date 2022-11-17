@@ -317,13 +317,12 @@ void kStat(int arr[], int n, int k)
 {
     cout << "START" << endl;
     arrOut(arr, n);
-    int l = 0, r = n - 1, i = 0, j = 0, x = 0, temp = 0;
+    int l = 0, r = n - 1, i = 0, j = 0, x = 0;
     while (l < r - 1)
     {
         x = arr[k];
         i = l;
         j = r;
-        cout << j << "-" << arr[j] << endl;
         do
         {
             cout << "Vhod: " << endl;
@@ -335,9 +334,7 @@ void kStat(int arr[], int n, int k)
             if (i <= j)
             {
                 cout << arr[i] << "-i   j-" << arr[j] << endl;
-                temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+                swap(arr[i], arr[j]);
                 i++;
                 j--;
             }
