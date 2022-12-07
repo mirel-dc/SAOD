@@ -7,18 +7,25 @@
 #define INF 5000
 using namespace std;
 
-//Количество вершин
-const int n = 7;
+// Количество вершин
+const int n = 6;
 
-//Граф через матрицу смежности
+// Граф через матрицу смежности
 int graph[n][n] = {
-    {0, 3, 1, 7, 0, 2, 0},
-    {0, 0, 0, 1, 0, 2, 1},
-    {0, 1, 0, 1, 3, 0, 0},
-    {7, 1, 0, 0, 2, 0, 1},
-    {1, 0, 1, 0, 0, 5, 3},
-    {3, 0, 3, 0, 5, 0, 0},
-    {0, 2, 0, 1, 3, 0, 0}};
+    {0, 10, 1, 5, 0, 0},
+    {0, 0, 0, 0, 0, 0},
+    {1, 0, 0, 3, 2, 4},
+    {5, 0, 3, 0, 0, 1},
+    {0, 0, 2, 0, 0, 1},
+    {0, 0, 4, 1, 1, 0}};
+
+// {0, 3, 1, 7, 0, 2, 0},
+// {0, 0, 0, 1, 0, 2, 1},
+// {0, 1, 0, 1, 3, 0, 0},
+// {7, 1, 0, 0, 2, 0, 1},
+// {1, 0, 1, 0, 0, 5, 3},
+// {3, 0, 3, 0, 5, 0, 0},
+// {0, 2, 0, 1, 3, 0, 0}
 
 void printGraph();
 
@@ -74,6 +81,7 @@ int main()
             cout << "DFS " << start << ": ";
             DFS(start - 1);
             cout << endl;
+            visitedFalse();
             break;
 
         case 3:
@@ -117,15 +125,25 @@ void printGraph()
     }
 }
 
-//Выполнить обход графа в глубину
+// Выполнить обход графа в глубину
 void DFS(int st)
 {
-    int i;
+    bool flag = false;
+    int i, temp;
     cout << st + 1 << " ";
     visited[st] = true;
-    for (i = 0; i <= n; i++)
+    for (i = 0; i < n; i++)
+    {
         if ((graph[st][i] != 0) && (!visited[i]))
             DFS(i);
+    }
+    for (i = 0; i < n; i++)
+    {
+        if (!visited[i])
+        {
+            DFS(i);
+        }
+    }
 }
 
 void visitedFalse()
@@ -137,7 +155,7 @@ void visitedFalse()
     }
 }
 
-//Определить самый короткий цикл в графе
+// Определить самый короткий цикл в графе
 void floydWarshallCycle()
 {
     int matrix[n][n], i, j, k;
@@ -167,8 +185,8 @@ void floydWarshallCycle()
                         }
                     }
                 }
+                tempPath.clear();
             }
-            tempPath.clear();
         }
     }
     printMatrix(matrix);
@@ -210,7 +228,8 @@ void toFloydCycle()
     }
 }
 
-//Определить кратчайший путь между всеми парами вершин
+// Определить кратчайший путь между всеми парами вершин
+string pathFloyd[n][n];
 void floydWarshall()
 {
     int matrix[n][n], i, j, k;
@@ -219,6 +238,7 @@ void floydWarshall()
         for (j = 0; j < n; j++)
             matrix[i][j] = floydGraph[i][j];
 
+    printMatrix(matrix);
     for (k = 0; k < n; k++)
     {
         for (i = 0; i < n; i++)
@@ -228,11 +248,26 @@ void floydWarshall()
                 if (matrix[i][k] + matrix[k][j] < matrix[i][j])
                 {
                     if (k != 0)
-                        cout << i + 1 << "->" << j + 1 << " = " << i + 1 << "->" << k + 1 << "->" << j + 1 << endl;
-                    matrix[i][j] = matrix[i][k] + matrix[k][j];
+                    {
+                        pathFloyd[i][j] += to_string(k + 1);
+                        matrix[i][j] = matrix[i][k] + matrix[k][j];
+                    }
                 }
             }
         }
+    }
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            if (i != j)
+                if (pathFloyd[i][j] != "")
+                {
+                    cout << i + 1 << " -> " << j + 1 << " through ";
+                    cout << pathFloyd[i][j] << " ";
+                }
+        }
+        cout << endl;
     }
     printMatrix(matrix);
     cout << endl;
@@ -244,20 +279,28 @@ void toFloyd()
     {
         for (int j = 0; j < n; j++)
         {
-            if (i == j)
-                floydGraph[i][i] = 0;
             if (graph[i][j] == 0)
-                if (i == j)
-                    floydGraph[i][i] = 0;
-                else
-                    floydGraph[i][j] = INF;
+            {
+                // if (i == j)
+                //     floydGraph[i][i] = 0;
+                // else
+                floydGraph[i][j] = INF;
+            }
             else
                 floydGraph[i][j] = graph[i][j];
+            //     floydGraph[i][i] = 0;
+            // if (graph[i][j] == 0)
+            //     // if (i == j)
+            //     //     floydGraph[i][i] = 0;
+            //     // else
+            //     floydGraph[i][j] = INF;
+            // else
+            //     floydGraph[i][j] = graph[i][j];
         }
     }
 }
 
-//Построить минимальное остовное дерево с помощью алгоритма Прима
+// Построить минимальное остовное дерево с помощью алгоритма Прима
 void primMST()
 {
     int no_edge;
