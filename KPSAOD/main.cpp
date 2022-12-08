@@ -19,14 +19,6 @@ int graph[n][n] = {
     {0, 0, 2, 0, 0, 1},
     {0, 0, 4, 1, 1, 0}};
 
-// {0, 3, 1, 7, 0, 2, 0},
-// {0, 0, 0, 1, 0, 2, 1},
-// {0, 1, 0, 1, 3, 0, 0},
-// {7, 1, 0, 0, 2, 0, 1},
-// {1, 0, 1, 0, 0, 5, 3},
-// {3, 0, 3, 0, 5, 0, 0},
-// {0, 2, 0, 1, 3, 0, 0}
-
 void printGraph();
 
 // DFS
@@ -43,9 +35,12 @@ void floydWarshallCycle();
 void printMatrix(int matrix[][n]);
 
 // FLOYD-WARSHALL
+int Next[n][n];
 int floydGraph[n][n];
 void toFloyd();
 void floydWarshall();
+vector<int> Path(int u, int v);
+void printPath();
 
 // PRIM
 void primMST();
@@ -94,12 +89,11 @@ int main()
             cout << "Floyd-Warshall matrix: " << endl;
             toFloyd();
             floydWarshall();
+            printPath();
             break;
 
         case 5:
             primMST();
-
-        default:
             break;
         }
 
@@ -229,16 +223,18 @@ void toFloydCycle()
 }
 
 // Определить кратчайший путь между всеми парами вершин
-string pathFloyd[n][n];
 void floydWarshall()
 {
     int matrix[n][n], i, j, k;
 
     for (i = 0; i < n; i++)
+    {
         for (j = 0; j < n; j++)
+        {
             matrix[i][j] = floydGraph[i][j];
+        }
+    }
 
-    printMatrix(matrix);
     for (k = 0; k < n; k++)
     {
         for (i = 0; i < n; i++)
@@ -247,27 +243,11 @@ void floydWarshall()
             {
                 if (matrix[i][k] + matrix[k][j] < matrix[i][j])
                 {
-                    if (k != 0)
-                    {
-                        pathFloyd[i][j] += to_string(k + 1);
-                        matrix[i][j] = matrix[i][k] + matrix[k][j];
-                    }
+                    matrix[i][j] = matrix[i][k] + matrix[k][j];
+                    Next[i][j] = Next[i][k];
                 }
             }
         }
-    }
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            if (i != j)
-                if (pathFloyd[i][j] != "")
-                {
-                    cout << i + 1 << " -> " << j + 1 << " through ";
-                    cout << pathFloyd[i][j] << " ";
-                }
-        }
-        cout << endl;
     }
     printMatrix(matrix);
     cout << endl;
@@ -279,24 +259,55 @@ void toFloyd()
     {
         for (int j = 0; j < n; j++)
         {
-            if (graph[i][j] == 0)
+            if (i == j)
             {
-                // if (i == j)
-                //     floydGraph[i][i] = 0;
-                // else
-                floydGraph[i][j] = INF;
+                floydGraph[i][i] = 0;
             }
+
+            else if (graph[i][j] == 0)
+            {
+                floydGraph[i][j] = INF;
+                Next[i][j] = -1;
+            }
+
             else
+            {
                 floydGraph[i][j] = graph[i][j];
-            //     floydGraph[i][i] = 0;
-            // if (graph[i][j] == 0)
-            //     // if (i == j)
-            //     //     floydGraph[i][i] = 0;
-            //     // else
-            //     floydGraph[i][j] = INF;
-            // else
-            //     floydGraph[i][j] = graph[i][j];
+                Next[i][j] = j;
+            }
         }
+    }
+}
+
+vector<int> Path(int u, int v)
+{
+    if (Next[u][v] == -1)
+        return {};
+    vector<int> path = {u};
+    while (u != v)
+    {
+        u = Next[u][v];
+        path.push_back(u);
+    }
+    return path;
+}
+
+void printPath()
+{
+    vector<int> spath;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << i + 1 << " -> " << j + 1 << " : ";
+            spath = Path(i, j);
+            for (int i : spath)
+            {
+                cout << i + 1 << " ";
+            }
+            cout << endl;
+        }
+        cout << "-----------" << endl;
     }
 }
 
